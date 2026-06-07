@@ -1,0 +1,1771 @@
+{
+  "$defs": {
+    "CompareResult": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/EvidenceItem"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "frame_a": {
+          "title": "Frame A",
+          "type": "integer"
+        },
+        "frame_b": {
+          "title": "Frame B",
+          "type": "integer"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "main_changes": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Main Changes",
+          "type": "array"
+        },
+        "selection": {
+          "title": "Selection",
+          "type": "string"
+        },
+        "summary": {
+          "title": "Summary",
+          "type": "string"
+        }
+      },
+      "required": [
+        "selection",
+        "frame_a",
+        "frame_b",
+        "main_changes",
+        "summary"
+      ],
+      "title": "CompareResult",
+      "type": "object"
+    },
+    "ContextResult": {
+      "additionalProperties": false,
+      "properties": {
+        "budget": {
+          "default": "small",
+          "enum": [
+            "small",
+            "medium",
+            "large"
+          ],
+          "title": "Budget",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/EvidenceItem"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "focus": {
+          "items": {
+            "enum": [
+              "general",
+              "contacts",
+              "ligand_contact_shell",
+              "metal_coordination",
+              "interchain_interfaces",
+              "hydrogen_bonds",
+              "salt_bridges",
+              "hydrophobic_contacts",
+              "pi_stacking",
+              "water_bridges",
+              "steric_clashes"
+            ],
+            "type": "string"
+          },
+          "title": "Focus",
+          "type": "array"
+        },
+        "frame": {
+          "title": "Frame",
+          "type": "integer"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "objects": {
+          "items": {
+            "$ref": "#/$defs/ObjectRef"
+          },
+          "title": "Objects",
+          "type": "array"
+        },
+        "radius_A": {
+          "title": "Radius A",
+          "type": "number"
+        },
+        "relations": {
+          "items": {
+            "$ref": "#/$defs/Relation"
+          },
+          "title": "Relations",
+          "type": "array"
+        },
+        "scale": {
+          "anyOf": [
+            {
+              "enum": [
+                "chemical_contacts",
+                "residue_environment",
+                "ligand_binding_site",
+                "metal_coordination",
+                "protein_interface",
+                "broad_environment"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Scale"
+        },
+        "selection": {
+          "title": "Selection",
+          "type": "string"
+        },
+        "summary": {
+          "title": "Summary",
+          "type": "string"
+        }
+      },
+      "required": [
+        "selection",
+        "frame",
+        "radius_A",
+        "objects",
+        "relations",
+        "summary"
+      ],
+      "title": "ContextResult",
+      "type": "object"
+    },
+    "ContextScaleInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "budget": {
+          "enum": [
+            "small",
+            "medium",
+            "large"
+          ],
+          "title": "Budget",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "focus": {
+          "items": {
+            "enum": [
+              "general",
+              "contacts",
+              "ligand_contact_shell",
+              "metal_coordination",
+              "interchain_interfaces",
+              "hydrogen_bonds",
+              "salt_bridges",
+              "hydrophobic_contacts",
+              "pi_stacking",
+              "water_bridges",
+              "steric_clashes"
+            ],
+            "type": "string"
+          },
+          "title": "Focus",
+          "type": "array"
+        },
+        "id": {
+          "enum": [
+            "chemical_contacts",
+            "residue_environment",
+            "ligand_binding_site",
+            "metal_coordination",
+            "protein_interface",
+            "broad_environment"
+          ],
+          "title": "Id",
+          "type": "string"
+        },
+        "radius_A": {
+          "title": "Radius A",
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "radius_A",
+        "budget",
+        "focus",
+        "description"
+      ],
+      "title": "ContextScaleInfo",
+      "type": "object"
+    },
+    "ContextScalesResult": {
+      "additionalProperties": false,
+      "properties": {
+        "count": {
+          "title": "Count",
+          "type": "integer"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "scales": {
+          "items": {
+            "$ref": "#/$defs/ContextScaleInfo"
+          },
+          "title": "Scales",
+          "type": "array"
+        }
+      },
+      "required": [
+        "scales",
+        "count"
+      ],
+      "title": "ContextScalesResult",
+      "type": "object"
+    },
+    "EvidenceItem": {
+      "additionalProperties": false,
+      "properties": {
+        "frame": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Frame"
+        },
+        "metric": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Metric"
+        },
+        "source": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source"
+        },
+        "type": {
+          "title": "Type",
+          "type": "string"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unit"
+        },
+        "value": {
+          "anyOf": [
+            {},
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "title": "EvidenceItem",
+      "type": "object"
+    },
+    "LoadResult": {
+      "additionalProperties": false,
+      "properties": {
+        "available_annotations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Available Annotations",
+          "type": "array"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "mode": {
+          "enum": [
+            "static",
+            "trajectory"
+          ],
+          "title": "Mode",
+          "type": "string"
+        },
+        "n_atoms": {
+          "title": "N Atoms",
+          "type": "integer"
+        },
+        "n_chains": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "N Chains"
+        },
+        "n_frames": {
+          "title": "N Frames",
+          "type": "integer"
+        },
+        "n_residues": {
+          "title": "N Residues",
+          "type": "integer"
+        },
+        "n_segments": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "N Segments"
+        },
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Name"
+        },
+        "source_files": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Files",
+          "type": "array"
+        },
+        "target_id": {
+          "title": "Target Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "target_id",
+        "n_atoms",
+        "n_residues",
+        "n_frames",
+        "mode"
+      ],
+      "title": "LoadResult",
+      "type": "object"
+    },
+    "LocateResult": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/EvidenceItem"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "frame": {
+          "title": "Frame",
+          "type": "integer"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "location": {
+          "$ref": "#/$defs/LocationInfo"
+        },
+        "resolved_objects": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Resolved Objects",
+          "type": "array"
+        },
+        "selection": {
+          "title": "Selection",
+          "type": "string"
+        }
+      },
+      "required": [
+        "selection",
+        "resolved_objects",
+        "frame",
+        "location"
+      ],
+      "title": "LocateResult",
+      "type": "object"
+    },
+    "LocationInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "biological_interface_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Biological Interface Ids",
+          "type": "array"
+        },
+        "center_of_geometry_A": {
+          "items": {
+            "type": "number"
+          },
+          "title": "Center Of Geometry A",
+          "type": "array"
+        },
+        "chain": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Chain"
+        },
+        "distance_to_chain_centroid_A": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Distance To Chain Centroid A"
+        },
+        "exposure_source": {
+          "anyOf": [
+            {
+              "const": "freesasa",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Exposure Source"
+        },
+        "exposure_status": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Exposure Status"
+        },
+        "interchain_contact_interface_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Interchain Contact Interface Ids",
+          "type": "array"
+        },
+        "interface_chains": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Interface Chains",
+          "type": "array"
+        },
+        "landmark_memberships": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Landmark Memberships",
+          "type": "array"
+        },
+        "ligand_contact_shell_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Ligand Contact Shell Ids",
+          "type": "array"
+        },
+        "ligand_contacts": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Ligand Contacts",
+          "type": "array"
+        },
+        "local_contact_count": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Local Contact Count"
+        },
+        "local_contact_radius_A": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Local Contact Radius A"
+        },
+        "local_packing": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Local Packing"
+        },
+        "local_packing_source": {
+          "anyOf": [
+            {
+              "const": "local_packing_density",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Local Packing Source"
+        },
+        "near_ligands": {
+          "items": {
+            "$ref": "#/$defs/NearbyObject"
+          },
+          "title": "Near Ligands",
+          "type": "array"
+        },
+        "nearest_interchain_distance_A": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Nearest Interchain Distance A"
+        },
+        "nearest_protein_residues": {
+          "items": {
+            "$ref": "#/$defs/NearbyObject"
+          },
+          "title": "Nearest Protein Residues",
+          "type": "array"
+        },
+        "objects": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Objects",
+          "type": "array"
+        },
+        "plain_language": {
+          "title": "Plain Language",
+          "type": "string"
+        },
+        "pocket_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Pocket Ids",
+          "type": "array"
+        },
+        "relative_sasa": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Relative Sasa"
+        },
+        "sasa_A2": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sasa A2"
+        },
+        "secondary_structure": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Secondary Structure"
+        },
+        "secondary_structure_element": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Secondary Structure Element"
+        },
+        "segment": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Segment"
+        },
+        "selected_atom_count": {
+          "title": "Selected Atom Count",
+          "type": "integer"
+        },
+        "selected_object_count": {
+          "title": "Selected Object Count",
+          "type": "integer"
+        },
+        "structural_profile": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StructuralProfile"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "surface_status": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Surface Status"
+        }
+      },
+      "required": [
+        "center_of_geometry_A",
+        "selected_atom_count",
+        "selected_object_count",
+        "plain_language"
+      ],
+      "title": "LocationInfo",
+      "type": "object"
+    },
+    "NearbyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "annotations": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StructuralProfile"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "min_distance_A": {
+          "title": "Min Distance A",
+          "type": "number"
+        },
+        "object_id": {
+          "title": "Object Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "object_id",
+        "min_distance_A"
+      ],
+      "title": "NearbyObject",
+      "type": "object"
+    },
+    "ObjectRef": {
+      "additionalProperties": false,
+      "properties": {
+        "altloc": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Altloc"
+        },
+        "annotations": {
+          "additionalProperties": true,
+          "title": "Annotations",
+          "type": "object"
+        },
+        "atom_count": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Atom Count"
+        },
+        "atom_index": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Atom Index"
+        },
+        "atom_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Atom Name"
+        },
+        "chain": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Chain"
+        },
+        "icode": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Icode"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Name"
+        },
+        "resid": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Resid"
+        },
+        "resname": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Resname"
+        },
+        "segment": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Segment"
+        },
+        "type": {
+          "enum": [
+            "atom",
+            "residue",
+            "ligand",
+            "ion",
+            "water",
+            "chain",
+            "selection_region",
+            "secondary_structure",
+            "loop",
+            "ligand_contact_shell",
+            "pocket",
+            "interchain_contact_interface",
+            "biological_interface"
+          ],
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "type"
+      ],
+      "title": "ObjectRef",
+      "type": "object"
+    },
+    "ObjectsResult": {
+      "additionalProperties": false,
+      "properties": {
+        "count": {
+          "title": "Count",
+          "type": "integer"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "objects": {
+          "items": {
+            "$ref": "#/$defs/ObjectRef"
+          },
+          "title": "Objects",
+          "type": "array"
+        },
+        "returned": {
+          "title": "Returned",
+          "type": "integer"
+        },
+        "truncated": {
+          "default": false,
+          "title": "Truncated",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "objects",
+        "count",
+        "returned"
+      ],
+      "title": "ObjectsResult",
+      "type": "object"
+    },
+    "Relation": {
+      "additionalProperties": false,
+      "properties": {
+        "angle_deg": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Angle Deg"
+        },
+        "backend": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Backend"
+        },
+        "category": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Category"
+        },
+        "confidence": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Confidence"
+        },
+        "cutoff_A": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cutoff A"
+        },
+        "definition_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Definition Id"
+        },
+        "definition_source": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Definition Source"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/EvidenceItem"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "frames": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "integer"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Frames"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "min_distance_A": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Min Distance A"
+        },
+        "occupancy": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Occupancy"
+        },
+        "reference_keys": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Reference Keys",
+          "type": "array"
+        },
+        "source": {
+          "title": "Source",
+          "type": "string"
+        },
+        "source_atom": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Atom"
+        },
+        "target": {
+          "title": "Target",
+          "type": "string"
+        },
+        "target_atom": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Target Atom"
+        },
+        "type": {
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source",
+        "target",
+        "type"
+      ],
+      "title": "Relation",
+      "type": "object"
+    },
+    "SelectionResult": {
+      "additionalProperties": false,
+      "properties": {
+        "expression": {
+          "title": "Expression",
+          "type": "string"
+        },
+        "frame": {
+          "title": "Frame",
+          "type": "integer"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "n_atoms": {
+          "title": "N Atoms",
+          "type": "integer"
+        },
+        "resolved_objects": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Resolved Objects",
+          "type": "array"
+        },
+        "selection": {
+          "title": "Selection",
+          "type": "string"
+        }
+      },
+      "required": [
+        "selection",
+        "expression",
+        "frame",
+        "n_atoms",
+        "resolved_objects"
+      ],
+      "title": "SelectionResult",
+      "type": "object"
+    },
+    "StructuralProfile": {
+      "additionalProperties": false,
+      "properties": {
+        "biological_interface_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Biological Interface Ids",
+          "type": "array"
+        },
+        "definition_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Definition Ids",
+          "type": "array"
+        },
+        "exposure": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Exposure"
+        },
+        "exposure_counts": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Exposure Counts",
+          "type": "object"
+        },
+        "exposure_source": {
+          "anyOf": [
+            {
+              "const": "freesasa",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Exposure Source"
+        },
+        "interchain_contact_interface_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Interchain Contact Interface Ids",
+          "type": "array"
+        },
+        "interface_chains": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Interface Chains",
+          "type": "array"
+        },
+        "interface_distance_cutoff_A": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Interface Distance Cutoff A"
+        },
+        "landmark_memberships": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Landmark Memberships",
+          "type": "array"
+        },
+        "ligand_contact_cutoff_A": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ligand Contact Cutoff A"
+        },
+        "ligand_contact_shell_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Ligand Contact Shell Ids",
+          "type": "array"
+        },
+        "ligand_contacts": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Ligand Contacts",
+          "type": "array"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "local_contact_count": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Local Contact Count"
+        },
+        "local_contact_radius_A": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Local Contact Radius A"
+        },
+        "local_packing": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Local Packing"
+        },
+        "local_packing_counts": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Local Packing Counts",
+          "type": "object"
+        },
+        "local_packing_source": {
+          "anyOf": [
+            {
+              "const": "local_packing_density",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Local Packing Source"
+        },
+        "nearest_interchain_distance_A": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Nearest Interchain Distance A"
+        },
+        "pocket_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Pocket Ids",
+          "type": "array"
+        },
+        "reference_keys": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Reference Keys",
+          "type": "array"
+        },
+        "relative_sasa": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Relative Sasa"
+        },
+        "sasa_A2": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sasa A2"
+        },
+        "secondary_structure": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Secondary Structure"
+        },
+        "secondary_structure_code": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Secondary Structure Code"
+        },
+        "secondary_structure_counts": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Secondary Structure Counts",
+          "type": "object"
+        },
+        "secondary_structure_element": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Secondary Structure Element"
+        },
+        "secondary_structure_source": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Secondary Structure Source"
+        },
+        "selected_residue_count": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Selected Residue Count"
+        },
+        "surface_status": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Surface Status"
+        }
+      },
+      "title": "StructuralProfile",
+      "type": "object"
+    },
+    "TimelineMetricInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "best_for": {
+          "title": "Best For",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "event_types": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Event Types",
+          "type": "array"
+        },
+        "example": {
+          "title": "Example",
+          "type": "string"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "metric": {
+          "title": "Metric",
+          "type": "string"
+        },
+        "optional_arguments": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Optional Arguments",
+          "type": "array"
+        },
+        "required_arguments": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Required Arguments",
+          "type": "array"
+        },
+        "sampled_value_keys": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Sampled Value Keys",
+          "type": "array"
+        },
+        "summary_keys": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Summary Keys",
+          "type": "array"
+        }
+      },
+      "required": [
+        "metric",
+        "required_arguments",
+        "best_for",
+        "description",
+        "summary_keys",
+        "sampled_value_keys",
+        "event_types",
+        "example"
+      ],
+      "title": "TimelineMetricInfo",
+      "type": "object"
+    },
+    "TimelineMetricsResult": {
+      "additionalProperties": false,
+      "properties": {
+        "count": {
+          "title": "Count",
+          "type": "integer"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "metrics": {
+          "items": {
+            "$ref": "#/$defs/TimelineMetricInfo"
+          },
+          "title": "Metrics",
+          "type": "array"
+        }
+      },
+      "required": [
+        "metrics",
+        "count"
+      ],
+      "title": "TimelineMetricsResult",
+      "type": "object"
+    },
+    "TimelineResult": {
+      "additionalProperties": false,
+      "properties": {
+        "events": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Events",
+          "type": "array"
+        },
+        "frames_analyzed": {
+          "title": "Frames Analyzed",
+          "type": "integer"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "metric": {
+          "title": "Metric",
+          "type": "string"
+        },
+        "sampled_values": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Sampled Values",
+          "type": "array"
+        },
+        "selection": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Selection"
+        },
+        "selection1": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Selection1"
+        },
+        "selection2": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Selection2"
+        },
+        "summary": {
+          "additionalProperties": true,
+          "title": "Summary",
+          "type": "object"
+        },
+        "summary_text": {
+          "default": "",
+          "title": "Summary Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "metric",
+        "frames_analyzed",
+        "summary"
+      ],
+      "title": "TimelineResult",
+      "type": "object"
+    }
+  },
+  "anyOf": [
+    {
+      "$ref": "#/$defs/LoadResult"
+    },
+    {
+      "$ref": "#/$defs/ObjectsResult"
+    },
+    {
+      "$ref": "#/$defs/SelectionResult"
+    },
+    {
+      "$ref": "#/$defs/LocateResult"
+    },
+    {
+      "$ref": "#/$defs/ContextResult"
+    },
+    {
+      "$ref": "#/$defs/ContextScalesResult"
+    },
+    {
+      "$ref": "#/$defs/TimelineMetricsResult"
+    },
+    {
+      "$ref": "#/$defs/TimelineResult"
+    },
+    {
+      "$ref": "#/$defs/CompareResult"
+    }
+  ],
+  "description": "JSON schemas for MolInspect public API result models.",
+  "title": "MolInspect output schemas"
+}
