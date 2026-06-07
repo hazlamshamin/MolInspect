@@ -66,7 +66,7 @@ class InspectionSession:
         self,
         type: str | Sequence[str] | None = None,
         contains: str | None = None,
-        frame: int | None = None,
+        frame: int | str | None = None,
         limit: int = 50,
     ) -> ObjectsResult:
         """List stable molecular objects, optionally filtered by literal text."""
@@ -144,7 +144,7 @@ class InspectionSession:
         selection: str | None = None,
         selection1: str | None = None,
         selection2: str | None = None,
-        frames: str | tuple[int, int] = "all",
+        frames: str | tuple[int | str, int | str] = "all",
         stride: int | None = None,
     ) -> TimelineResult:
         """Summarize a structural metric, relation, or motion signal over frames."""

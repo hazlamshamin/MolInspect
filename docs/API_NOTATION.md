@@ -50,6 +50,8 @@ Field meanings:
 - Atom objects also expose `altloc` when the topology provides an alternate-location
   identifier. The atom index remains part of the object ID for uniqueness.
 - `selection_region` is a compact synthetic object for broad selections with more than 25 residues.
+  It can appear in outputs from broad selections, but it is not accepted as an
+  `objects(type=...)` filter or reusable selection string.
 - `ligand_contact_shell` is a direct ligand/ion heavy-atom contact shell.
 - `pocket` is reserved for a successful backend pocket call. P2Rank is preferred
   for ligand-binding-site prediction; fpocket is a geometric fallback. It is not
@@ -99,14 +101,17 @@ around 4 of chain A and resid 87
 ```
 
 Object IDs returned by `objects()`, `locate()`, or `context()` can also be passed
-back as selections when they identify a concrete object or backend landmark:
+back as selections when they identify a concrete object or selectable landmark:
 
 ```text
 residue:A:87:HIS
 ligand:A:142:HEM
 atom:A:142:HEM:FE:1064
+secondary_structure:A:alpha_helix:21-35
+loop:A:18-20
 ligand_contact_shell:A:142:HEM
 pocket:p2rank:1
+interchain_contact_interface:A-B
 biological_interface:pisa:1
 ```
 
@@ -128,6 +133,7 @@ session.timeline(metric="relation", selection1="A:87", selection2="resname HEM")
 session.timeline(metric="rmsd", selection="chain A")
 session.timeline(metric="mobility", selection="chain A")
 session.resolve_selection("around 4 of chain A and resid 87")
+session.resolve_selection("secondary_structure:A:alpha_helix:21-35")
 session.resolve_selection("ligand_contact_shell:A:142:HEM")
 session.resolve_selection("biological_interface:pisa:1")
 ```

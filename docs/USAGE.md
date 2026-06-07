@@ -36,6 +36,9 @@ session.resolve_selection("ligand:A:142:HEM")
 session.context("ligand_contact_shell:A:142:HEM")
 ```
 
+Broad selections can be compacted to `selection_region` output objects. Those
+are summary objects for compact output, not reusable selection strings.
+
 ## Locate One Selection
 
 Use `locate()` when you want a compact identity and placement card.
@@ -85,7 +88,7 @@ session.context("chain A and resid 87", radius=4.0, focus="contacts")
 session.context("chain A and resname HEM and name FE", radius=3.0,
                 focus="metal_coordination")
 session.context("chain A and resid 11", radius=5.0, focus="salt_bridges")
-session.context("chain A", scale="protein_interface")
+session.context("protein and chain A", scale="protein_interface")
 ```
 
 Focus values are explicit controls, not natural-language questions. See

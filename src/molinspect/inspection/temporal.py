@@ -64,7 +64,7 @@ def timeline(
     selection: str | None = None,
     selection1: str | None = None,
     selection2: str | None = None,
-    frames: str | tuple[int, int] = "all",
+    frames: str | tuple[int | str, int | str] = "all",
     stride: int | None = None,
 ) -> TimelineResult:
     """Summarize structural metrics, relations, or mobility over frames."""

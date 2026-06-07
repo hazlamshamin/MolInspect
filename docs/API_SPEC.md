@@ -7,6 +7,9 @@ For exact string formats used by these calls, read `docs/API_NOTATION.md`.
 All string controls are explicit structural notation. They are not
 natural-language commands.
 
+Return snippets below are compact examples. Complete output field names and
+types are also available in `schemas/output_schemas.json`.
+
 ## 1. `load()`
 
 Load a static structure or trajectory.
@@ -46,8 +49,10 @@ session = load(topology="protein.gro", trajectory="traj.xtc")
   "n_atoms": 48231,
   "n_residues": 326,
   "n_chains": 2,
+  "n_segments": 2,
   "n_frames": 10000,
   "mode": "trajectory",
+  "source_files": ["protein.gro", "traj.xtc"],
   "available_annotations": [
     "basic_topology",
     "local_packing_density",
@@ -59,7 +64,8 @@ session = load(topology="protein.gro", trajectory="traj.xtc")
     "plip_interactions",
     "p2rank_pockets",
     "pisa_biological_interfaces"
-  ]
+  ],
+  "limitations": []
 }
 ```
 
@@ -69,7 +75,28 @@ command is discoverable.
 
 ---
 
-## 2. `objects()`
+## 2. Session helpers
+
+The returned `InspectionSession` also exposes small helper methods:
+
+```python
+session.summary() -> LoadResult
+session.resolve_selection(selection: str, frame: int | str = 0) -> SelectionResult
+session.context_scales() -> ContextScalesResult
+session.timeline_metrics() -> TimelineMetricsResult
+```
+
+`summary()` returns the same load metadata as `session.load_result`.
+`resolve_selection()` is useful when users or agents need to verify exactly what
+a selection string resolves to before using `locate()`, `context()`, `timeline()`,
+or `compare()`.
+
+`context_scales()` and `timeline_metrics()` expose the concrete accepted scale
+and metric controls, including required arguments and output keys.
+
+---
+
+## 3. `objects()`
 
 List stable molecular objects with optional explicit filters.
 
@@ -77,13 +104,35 @@ List stable molecular objects with optional explicit filters.
 session.objects(
     type: str | list[str] | None = None,
     contains: str | None = None,
-    frame: int | None = None,
+    frame: int | str | None = None,
     limit: int = 50,
 )
 ```
 
 `contains` is a literal, case-insensitive substring filter over object IDs and
 labels. It is not natural-language input.
+
+Supported `type` values:
+
+```text
+atom
+residue
+ligand
+ion
+water
+chain
+secondary_structure
+loop
+ligand_contact_shell
+pocket
+interchain_contact_interface
+biological_interface
+```
+
+Plural aliases such as `ligands`, `residues`, `pockets`,
+`secondary_structures`, and `pisa_interfaces` are accepted. `selection_region`
+can appear in broad-selection outputs, but it is not a queryable
+`objects(type=...)` value.
 
 ### Example
 
@@ -141,13 +190,17 @@ biological_interface:pisa:1
       "resid": 401,
       "atom_count": 31
     }
-  ]
+  ],
+  "count": 1,
+  "returned": 1,
+  "truncated": false,
+  "limitations": []
 }
 ```
 
 ---
 
-## 3. `locate()`
+## 4. `locate()`
 
 Answer “where is this object/region?”
 
@@ -191,8 +244,11 @@ around 4 of chain A and resid 57
   "resolved_objects": ["residue:A:57:HIS"],
   "frame": 0,
   "location": {
+    "center_of_geometry_A": [12.3, 18.4, 5.1],
+    "selected_atom_count": 10,
+    "selected_object_count": 1,
     "chain": "A",
-    "residue": "HIS57",
+    "objects": ["residue:A:57:HIS"],
     "secondary_structure": "alpha_helix",
     "exposure_status": "partially_buried",
     "interface_chains": ["B"],
@@ -230,7 +286,7 @@ around 4 of chain A and resid 57
     "plain_language": "HIS57 is in chain A. Secondary structure is alpha_helix. Exposure is partially_buried (freesasa)."
   },
   "evidence": [
-    {"metric": "min_distance_to_ATP", "value": 6.8, "unit": "angstrom"}
+    {"type": "metric", "metric": "min_distance_to_ATP", "value": 6.8, "unit": "angstrom"}
   ],
   "limitations": [
     "Interface status uses inter-chain heavy-atom contacts, not biological assembly metadata."
@@ -245,7 +301,7 @@ SASA is unavailable.
 
 ---
 
-## 4. `context()`
+## 5. `context()`
 
 Retrieve compact local/global context relevant to a selection.
 
@@ -408,7 +464,7 @@ large   200 nearby objects
 
 ---
 
-## 5. `timeline()`
+## 6. `timeline()`
 
 Summarize a metric or relation over time.
 
@@ -418,7 +474,7 @@ session.timeline(
     selection: str | None = None,
     selection1: str | None = None,
     selection2: str | None = None,
-    frames: str | tuple[int, int] = "all",
+    frames: str | tuple[int | str, int | str] = "all",
     stride: int | None = None,
 )
 ```
@@ -569,7 +625,7 @@ for inspection and representative-frame choice, not kinetic state modeling.
 
 ---
 
-## 6. `compare()`
+## 7. `compare()`
 
 Compare a selection across two frames/states.
 

@@ -65,7 +65,7 @@ Example:
 
 ```python
 session.objects(type="interchain_contact_interface")
-session.context("chain A", scale="protein_interface")
+session.context("protein and chain A", scale="protein_interface")
 ```
 
 ## Molecular Dynamics And Ensembles

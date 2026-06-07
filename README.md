@@ -35,6 +35,21 @@ visualization GUI.
 uv sync
 ```
 
+For local development, use:
+
+```bash
+uv sync --extra dev
+```
+
+Optional command-line backends add more structural annotations when they are on
+`PATH`: `mkdssp` for DSSP secondary structure, `pisa` for biological
+interfaces, and `prank`/`p2rank` or `fpocket` for pocket objects. mmCIF loading
+uses the optional Gemmi extra:
+
+```bash
+uv sync --extra static
+```
+
 ## Quick Start
 
 ```python
@@ -65,21 +80,27 @@ MolInspect keeps the public surface intentionally small:
 
 ```python
 load()
-objects()
-locate()
-context()
-timeline()
-compare()
+session.summary()
+session.resolve_selection()
+session.objects()
+session.locate()
+session.context()
+session.context_scales()
+session.timeline_metrics()
+session.timeline()
+session.compare()
 ```
 
 Typical calls:
 
 ```python
 session.objects(type="ligand")
+session.resolve_selection("ligand:A:142:HEM")
 session.locate("chain A and resid 87")
 session.context("chain A and resid 87", scale="residue_environment")
 session.context("chain A and resname HEM", scale="ligand_binding_site")
-session.context("chain A", scale="protein_interface")
+session.context("protein and chain A", scale="protein_interface")
+session.context_scales()
 session.timeline_metrics()
 session.timeline(metric="centroid_distance", selection1="resid 1-29",
                  selection2="resid 122-159")
@@ -124,6 +145,6 @@ The included examples are `1CRN`, `1UBQ`, and `4HHB`.
 uv sync --extra dev
 uv run pytest
 uv run ruff check .
-uv run mypy src
+uv run mypy src tests
 uv build
 ```

@@ -201,7 +201,11 @@ def relation_type(distance_A: float | None, contact_cutoff_A: float = CONTACT_CU
     return "near"
 
 
-def frame_indices(n_frames: int, frames: str | tuple[int, int] = "all", stride: int | None = None) -> list[int]:
+def frame_indices(
+    n_frames: int,
+    frames: str | tuple[int | str, int | str] = "all",
+    stride: int | None = None,
+) -> list[int]:
     """Resolve a public frame range into explicit frame indices."""
 
     if stride is not None and stride < 1:
