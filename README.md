@@ -1,9 +1,10 @@
-# MolInspect
+# MolInspect: Python Toolkit for Protein Structure and Trajectory Inspection
 
-MolInspect is a Python inspection layer for molecular structures and
-trajectories. It helps programs and LLM agents retrieve compact structural
-evidence from PDB, mmCIF, and trajectory-like inputs without dumping raw
-coordinates into context.
+MolInspect is a Python toolkit for protein structure analysis and molecular
+trajectory inspection. It turns PDB, mmCIF, and trajectory-like inputs into
+compact typed evidence for structural biology, protein engineering,
+ligand-binding-site analysis, protein-protein interface analysis, and LLM-agent
+workflows.
 
 A static structure is treated as a one-frame trajectory, so the same API works
 for both:
@@ -13,21 +14,55 @@ T = 1  -> static structure
 T = N  -> trajectory, ensemble, or molecular movie
 ```
 
-## What It Helps With
+## Capabilities
 
-MolInspect is useful when you need structured answers to questions such as:
+MolInspect is useful when a workflow needs compact structural evidence instead
+of raw coordinate dumps:
 
-- where a residue, ligand, ion, pocket, or interface sits in a structure;
-- which residues form a ligand-binding environment;
-- which atoms support metal coordination, salt bridges, hydrogen-bond
-  candidates, hydrophobic contacts, aromatic contacts, or steric clashes;
-- whether a contact, hydrogen bond, distance, RMSD, mobility signal, or selection
-  spread changes over frames;
-- which compact evidence slice is worth handing to an LLM, report, or downstream
-  structural-biology workflow.
+- Load PDB, mmCIF, and trajectory-like molecular data through MDAnalysis.
+- Inspect residues, ligands, ions, waters, chains, secondary-structure elements,
+  ligand contact shells, pockets, and interfaces.
+- Retrieve residue environments, ligand-binding-site context, metal-coordination
+  context, and protein-interface context with explicit selection notation.
+- Report typed interaction evidence for hydrogen bonds, salt bridges, metal
+  coordination, hydrophobic contacts, pi stacking, water-bridge candidates,
+  steric clashes, nonbonded contacts, and nearby residues.
+- Summarize trajectory and ensemble signals: distance, contact occupancy,
+  relation occupancy, hydrogen-bond occupancy, ligand stability, RMSD,
+  RMSF/mobility, displacement, conformational states, centroid distance, and
+  selection spread.
+- Return Pydantic models with exact measurements, object IDs, source atoms,
+  backend attribution, cutoffs, references, and limitations.
+
+## Who It Is For
+
+- Structural biologists inspecting local protein structure context.
+- Protein engineers checking mutation neighborhoods, ligand-facing residues, or
+  interface-facing residues.
+- Computational biologists and bioinformatics workflows that need structured
+  PDB/mmCIF evidence.
+- Molecular dynamics users who need compact trajectory summaries for RMSD, RMSF,
+  contact persistence, ligand stability, and interaction changes.
+- LLM agents and analysis pipelines that need high-signal structural context
+  without reading entire coordinate files.
+
+## Backends And Evidence
+
+MolInspect uses a small public API over internal structural-biology backends:
+
+- MDAnalysis for molecular loading, selection, distance, frame, RMSD, RMSF, and
+  hydrogen-bond trajectory support.
+- FreeSASA for exact solvent-accessible surface area and exposure.
+- DSSP through `mkdssp` for secondary-structure and loop objects.
+- PLIP and PDBe Arpeggio for protein-ligand and non-covalent interaction
+  evidence.
+- PISA for biological-interface objects.
+- P2Rank for ligand-binding-site pocket prediction; fpocket for geometric
+  pocket detection.
 
 It is not a molecular simulator, docking engine, protein-design tool, or full
-visualization GUI.
+visualization GUI. It does not estimate binding free energy or kinetic state
+models.
 
 ## Install
 
@@ -41,10 +76,9 @@ For local development, use:
 uv sync --extra dev
 ```
 
-Optional command-line backends add more structural annotations when they are on
-`PATH`: `mkdssp` for DSSP secondary structure, `pisa` for biological
-interfaces, and `prank`/`p2rank` or `fpocket` for pocket objects. mmCIF loading
-uses the optional Gemmi extra:
+For the full backend stack, put these commands on `PATH`: `mkdssp` for DSSP
+secondary structure, `pisa` for biological interfaces, and `prank`/`p2rank` or
+`fpocket` for pocket objects. mmCIF loading uses the Gemmi extra:
 
 ```bash
 uv sync --extra static
@@ -125,6 +159,7 @@ session.compare("chain A and resname HEM", frame_a="first", frame_b="last")
 - `docs/API_SPEC.md` documents the public Python API.
 - `docs/API_NOTATION.md` defines the explicit selection, object ID, frame, focus,
   context-scale, metric, and relation notation.
+- `llms.txt` lists the canonical docs for LLM and AI-search ingestion.
 
 ## Examples
 

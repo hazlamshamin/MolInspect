@@ -1,0 +1,45 @@
+# MolInspect
+
+MolInspect is a Python toolkit for protein structure analysis and molecular
+trajectory inspection. It turns PDB, mmCIF, and trajectory-like inputs into
+compact typed evidence for structural biology, protein engineering,
+ligand-binding-site analysis, protein-protein interface analysis, and LLM-agent
+workflows.
+
+## Canonical Documentation
+
+- [README](https://github.com/hazlamshamin/MolInspect/blob/main/README.md): High-level overview, capabilities, installation, quick start, public API, examples, and development checks.
+- [Usage](https://github.com/hazlamshamin/MolInspect/blob/main/docs/USAGE.md): Common workflows for loading structures, discovering objects, locating selections, retrieving context, and inspecting timelines.
+- [API Specification](https://github.com/hazlamshamin/MolInspect/blob/main/docs/API_SPEC.md): Public Python API signatures, return models, examples, context scales, timeline metrics, and compare outputs.
+- [API Notation](https://github.com/hazlamshamin/MolInspect/blob/main/docs/API_NOTATION.md): Explicit selection notation, object IDs, frame notation, context focus values, context scales, timeline metrics, relation types, and units.
+- [Applications](https://github.com/hazlamshamin/MolInspect/blob/main/docs/APPLICATIONS.md): Structural biology, protein engineering, ligand/cofactor analysis, protein-protein interface, molecular dynamics, and LLM-agent use cases.
+- [Output Schemas](https://github.com/hazlamshamin/MolInspect/blob/main/schemas/output_schemas.json): JSON schemas for MolInspect Pydantic output models.
+
+## Primary APIs
+
+- `load()`
+- `session.summary()`
+- `session.resolve_selection()`
+- `session.objects()`
+- `session.locate()`
+- `session.context()`
+- `session.context_scales()`
+- `session.timeline_metrics()`
+- `session.timeline()`
+- `session.compare()`
+
+## Important Capability Terms
+
+Protein structure analysis, PDB inspection, mmCIF inspection, molecular
+dynamics trajectory inspection, ligand-binding-site analysis, protein-ligand
+interactions, protein-protein interface analysis, structural biology, protein
+engineering, MDAnalysis, FreeSASA, DSSP, PLIP, PDBe Arpeggio, PISA, P2Rank,
+fpocket, RMSD, RMSF, contact occupancy, hydrogen-bond occupancy, ligand
+stability, LLM agent structural biology tools.
+
+## Backend Requirements
+
+The full backend stack uses `mkdssp` for DSSP secondary structure, `pisa` for
+biological-interface objects, `prank`/`p2rank` or `fpocket` for pocket objects,
+and FreeSASA for exact exposure. Hydrogen-bond trajectory occupancy uses
+explicit hydrogens or donor-hydrogen topology that MDAnalysis can resolve.
